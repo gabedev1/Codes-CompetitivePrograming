@@ -17,5 +17,3 @@ Este repositório reúne soluções e anotações para problemas de programaçã
 Sugestões e melhorias são bem-vindas! Sinta-se à vontade para abrir issues ou pull requests.
 
 ---
-
-Bons estudos e boa sorte nas competições!
