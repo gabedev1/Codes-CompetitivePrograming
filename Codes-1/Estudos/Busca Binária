@@ -1,0 +1,85 @@
+A **busca binária** é um algoritmo eficiente para encontrar um elemento em um array **ordenado**. Ela funciona dividindo repetidamente o intervalo de busca pela metade, comparando o valor procurado com o elemento do meio do array. Se o valor for menor que o elemento do meio, a busca continua na metade esquerda; se for maior, na metade direita. O processo se repete até que o elemento seja encontrado ou o intervalo de busca se torne inválido (indicando que o elemento não está no array).
+
+### Funcionamento da Busca Binária:
+1. **Array ordenado**: O algoritmo pressupõe que o array esteja em ordem crescente.
+2. **Divisão do intervalo**: Começa com o intervalo que vai da primeira à última posição do array.
+3. **Elemento do meio**: Em cada passo, compara o elemento procurado com o elemento do meio do intervalo.
+4. **Recursão ou iteração**: O algoritmo pode ser implementado de forma recursiva ou iterativa, eliminando metade do intervalo a cada passo.
+5. **Convergência**: O intervalo vai se reduzindo até que o elemento seja encontrado ou não existam mais elementos para verificar.
+
+### Exemplo de Código em C++:
+
+Aqui está uma implementação simples da busca binária em C++:
+
+```cpp
+#include <iostream>
+using namespace std;
+
+// Função que implementa a busca binária
+int buscaBinaria(int arr[], int tamanho, int x) {
+    int inicio = 0;         // Índice inicial
+    int fim = tamanho - 1;   // Índice final
+    
+    while (inicio <= fim) {
+        int meio = inicio + (fim - inicio) / 2;  // Calcula o meio evitando overflow
+
+        // Caso o elemento do meio seja igual ao procurado
+        if (arr[meio] == x)
+            return meio;  // Retorna o índice do elemento encontrado
+
+        // Se o elemento procurado for maior que o do meio, ignorar metade esquerda
+        if (arr[meio] < x)
+            inicio = meio + 1;  // Ajusta o início para o próximo intervalo
+
+        // Se o elemento procurado for menor, ignorar metade direita
+        else
+            fim = meio - 1;  // Ajusta o fim para o próximo intervalo
+    }
+
+    // Retorna -1 se o elemento não foi encontrado
+    return -1;
+}
+
+int main() {
+    int arr[] = {2, 3, 4, 10, 40};  // Array precisa estar ordenado
+    int tamanho = sizeof(arr) / sizeof(arr[0]);  // Tamanho do array
+    int x = 10;  // Elemento a ser procurado
+    int resultado = buscaBinaria(arr, tamanho, x);
+
+    // Verifica se o elemento foi encontrado
+    if (resultado != -1)
+        cout << "Elemento encontrado no índice: " << resultado << endl;
+    else
+        cout << "Elemento não encontrado." << endl;
+
+    return 0;
+}
+```
+
+### Explicação do código:
+
+1. **Entrada**:
+   - `arr[]`: array ordenado onde a busca será feita.
+   - `tamanho`: número de elementos no array.
+   - `x`: elemento que queremos encontrar.
+
+2. **Inicialização**:
+   - `inicio`: aponta para o primeiro índice do array.
+   - `fim`: aponta para o último índice.
+
+3. **Loop principal (`while`)**:
+   - Enquanto o intervalo de busca for válido (`inicio <= fim`), o algoritmo repete o processo.
+   - Calcula o índice `meio` com a fórmula `inicio + (fim - inicio) / 2`.
+   - Compara o valor do meio com o valor procurado:
+     - Se `arr[meio] == x`, retorna o índice `meio`.
+     - Se `x` for maior, ajusta `inicio` para ignorar a metade esquerda.
+     - Se `x` for menor, ajusta `fim` para ignorar a metade direita.
+
+4. **Resultado**:
+   - Se o loop termina sem encontrar o elemento, a função retorna `-1`, indicando que o elemento não está presente no array.
+
+### Complexidade:
+- **Melhor caso**: O elemento é encontrado no primeiro meio, O(1).
+- **Pior caso**: O número de elementos a serem verificados diminui pela metade a cada iteração, levando a uma complexidade de **O(log n)**, onde `n` é o tamanho do array.
+
+Se precisar de mais alguma explicação ou ajustes no código, só avisar!

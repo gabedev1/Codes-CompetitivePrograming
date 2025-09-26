@@ -1,0 +1,58 @@
+Prefix sum (ou soma prefixada) é uma técnica usada para otimizar consultas sobre somas de subarrays. O conceito é calcular previamente a soma acumulada de um array, de forma que, quando for necessário consultar a soma de qualquer subarray, a resposta possa ser obtida em tempo constante \(O(1)\), em vez de \(O(n)\).
+
+Aqui está um exemplo em C++ com comentários explicando cada parte:
+
+```
+#include <iostream>
+#include <vector>  // Biblioteca para usar vetores
+
+using namespace std;
+
+int main() {
+    // Definimos um vetor de inteiros (array) com alguns valores
+    vector<int> arr = {1, 2, 3, 4, 5};  // Array original
+    int n = arr.size();  // Tamanho do array
+    
+    // Criamos um vetor de prefix sums com o mesmo tamanho do array original
+    vector<int> prefix_sum(n + 1, 0);  // Inicializamos com zero. O tamanho é n+1 para facilitar a conta.
+    
+    // Calculamos a soma prefixada
+    for (int i = 1; i <= n; i++) {
+        prefix_sum[i] = prefix_sum[i - 1] + arr[i - 1];  // Soma acumulada
+    }
+
+    // Agora podemos calcular a soma de qualquer subarray em tempo O(1)
+    // Exemplo: queremos a soma dos elementos do índice 1 ao 3 (ou seja, {2, 3, 4})
+    int l = 1;  // Índice inicial (baseado em 0)
+    int r = 3;  // Índice final
+
+    // A soma do subarray arr[l:r] é prefix_sum[r+1] - prefix_sum[l]
+    int sum_subarray = prefix_sum[r + 1] - prefix_sum[l];
+    
+    // Exibimos o resultado
+    cout << "A soma do subarray de " << l << " até " << r << " é: " << sum_subarray << endl;
+
+    return 0;
+}
+```
+
+Explicação detalhada:
+
+1. **Definição do vetor original (`arr`)**: 
+   - O vetor contém os valores dos quais queremos calcular a soma prefixada.
+
+2. **Criação do vetor `prefix_sum`**:
+   - Criamos um vetor chamado `prefix_sum` com tamanho \( n+1 \), inicializado com zeros. O tamanho extra permite que o índice 0 seja mantido como 0, facilitando a fórmula usada para calcular a soma dos subarrays.
+   
+3. **Cálculo das somas prefixadas**:
+   - O loop preenche o vetor `prefix_sum`, onde cada elemento `prefix_sum[i]` armazena a soma dos elementos do array original desde o início até o índice \( i-1 \). Ou seja:
+     - `prefix_sum[i] = prefix_sum[i - 1] + arr[i - 1]`.
+
+4. **Consulta da soma de um subarray**:
+   - Para obter a soma de qualquer subarray `arr[l:r]`, basta usar a fórmula:
+     - `prefix_sum[r + 1] - prefix_sum[l]`.
+   - Isso funciona porque `prefix_sum[r + 1]` é a soma dos elementos até o índice `r`, e subtraímos a soma dos elementos até o índice `l-1` para obter a soma exata do subarray.
+
+Essa técnica otimiza muito o tempo de consulta para somas de subarrays, especialmente em situações onde são feitas múltiplas consultas.A maior parte das redações analíticas, interpretativas, ou persuasivas tendem a seguir o mesmo padrão básico. Esta estrutura deve lhe ajudar a formular guias efetivas para a maioria das redações.
+
+---
